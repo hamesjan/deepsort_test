@@ -122,6 +122,8 @@ def create_detections(detection_mat, frame_idx, min_height=0):
         bbox, confidence, feature = row[2:6], row[6], row[10:]
         if bbox[3] < min_height:
             continue
+        # if I only want one detection
+        # if len(detection_list) == 0:
         detection_list.append(Detection(bbox, confidence, feature))
     return detection_list
 
@@ -209,14 +211,15 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
     f = open(output_file, 'w')
     for row in results:
         print('%d,%d,%.2f,%.2f,%.2f,%.2f,1,-1,-1,-1' % (
-            row[0], row[1], row[2], row[3], row[4], row[5]),file=f)
+            row[0], row[1], row[2], row[3], row[4], row[5]), file=f)
 
 
 def bool_string(input_string):
-    if input_string not in {"True","False"}:
+    if input_string not in {"True", "False"}:
         raise ValueError("Please Enter a valid Ture/False choice")
     else:
         return (input_string == "True")
+
 
 def parse_args():
     """ Parse command line arguments.
